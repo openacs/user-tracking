@@ -34,14 +34,12 @@ ad_proc -private user-tracking::apm_callbacks::package_install {} {
    
    #Busco ficheros de configuración
    set ut_dir [acs_package_root_dir "user-tracking"]
-   append config_dir $ut_dir "/config"
-   set execls [list "ls" $config_dir]
-   set files [exec [lindex $execls 0] [lindex $execls 1]]
-   
+   append config_dir $ut_dir "/config" 
+   set files [exec "find" $config_dir "-maxdepth" "1" "-type" "f"] 
    #Escribo los parámetros al final de cada fichero
    	
    for {set x 0} {$x<[llength $files]} {incr x} {
-   	set file_name "${config_dir}/[lindex $files $x]"
+   	set file_name [lindex $files $x]
    	
    	if { [file exists $file_name] == 1} {   
 
