@@ -1,0 +1,1 @@
+drop table ut_sched;
