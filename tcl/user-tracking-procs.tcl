@@ -22,7 +22,6 @@ namespace eval user-tracking {
     } {
 	Return directoy of user-tracking package
     } {
-	# return "[acs_root_dir][pkg_home [apm_package_key_from_id [ad_conn package_id]]]"
 	return "[acs_root_dir][pkg_home "user-tracking"]"
     }
 
@@ -42,9 +41,7 @@ namespace eval user-tracking {
 		set sessions_file [open [acs_root_dir]/www/results.dat r]
 		
 		while { [gets $sessions_file linea ] >= 0} { 
-		# Se procesa la variable "linea" 
-		# Hay un pb con el nombre del mes. No se puede meter directamente, ya que viene en español y la bd lo espera en inglés
-		# o en formato numérico. Por eso lo paso a formato numérico.
+
 		scan $linea "%u %u %s %u/%3s/%u %s %u/%3s/%u %s" session_id user_id ip day month year init_time f_day f_month f_year finish_time
 		set lista [lc_get abmon]
 		set init_date ""
@@ -68,7 +65,7 @@ namespace eval user-tracking {
 	db_dml delete_scheduled_processes {}
 	user-tracking::do_data_load $informes
 	set id [ad_schedule_proc  -thread "t" [expr [expr [lindex $horas 3] * 3600] + [expr [lindex $horas 4] * 60]] user-tracking::do_data_load $informes]
-    	ns_log notice "\n\nId del proc programado $id. Se ejecutará dentro de [expr [expr [lindex $horas 3] * 3600] + [expr [lindex $horas 4] * 60]] segundos\n"
+    	ns_log notice "\n\nScheduled proc id: $id.  Process will be launched in [expr [expr [lindex $horas 3] * 3600] + [expr [lindex $horas 4] * 60]] seconds\n"
     	db_dml insert_scheduled_process_id {}
     }
     
@@ -78,62 +75,55 @@ namespace eval user-tracking {
     	Execute awstats 
     } {
     
-     #Proceso la variable "informes"
-     
-     foreach elm $informes {
-    	switch $elm {
-    		1 { set all_users_p 1}
-    		2 { set all_communities_p 1}
-    		3 { set all_all_p 1}
-    		4 { set site_p 1}
-    	}
-     }
-	
-     if {[exists_and_not_null all_users_p]} {
-     	
-     	ns_log notice "Ejecuto script para cada usuario"
-     	
-     	db_foreach user "select user_id  from cc_users" {
-     		#Ejecuto script para cada usuario
-     		#ns_log notice "USUARIO: $user_id"
-		set execAnalyzer [list "/usr/bin/perl" "[get_user_tracking_dir]/www/awstats/cgi-bin/awstatsDirecto.pl" "-config=elane" "-update" "-onlyusers=$user_id"]
-		#ns_log notice "User: $user_id, ejecutamos: $execAnalyzer"
-
-		catch {exec [lindex $execAnalyzer 0] [lindex $execAnalyzer 1] [lindex $execAnalyzer 2] [lindex $execAnalyzer 3] [lindex $execAnalyzer 4]} aux
-
-	}
-     }
-     if {[exists_and_not_null all_communities_p]} {
-     	
-     	ns_log notice "Ejecuto script para cada comunidad"
-     	
-     	db_foreach community "select community_id from dotlrn_communities" {
-     		
-     		#ejecuto script para cada comunidad
-     		#ns_log notice "Comunidad: $community_id"
-                set execAnalyzer [list "[get_user_tracking_dir]/www/awstats/cgi-bin/awstatsDirecto.pl" "-config=elane" "-update" "-onlylines=REGEX[.*community_id=$community_id.*]"] 
-                catch {exec [lindex $execAnalyzer 0] [lindex $execAnalyzer 1] [lindex $execAnalyzer 2] [lindex $execAnalyzer 3]} aux
-     	}
-     }
- 
-     if {[exists_and_not_null all_all_p]} {
-     	ns_log notice "Ejecuto script para cada usuario en cada comunidad"
-     	db_foreach community "select community_id from dotlrn_communities" {
-     	     	db_foreach user "select user_id  from cc_users" {
-     	     		#ejecuto para cada user en cada comunidad
-     	     		ns_log notice "Comunidad: $community_id - User: $user_id"
-	                set execAnalyzer [list "[get_user_tracking_dir]/www/awstats/cgi-bin/awstatsDirecto.pl" "-config=elane" "-update" "-onlylines=REGEX[.*community_id=$community_id.*]" "-onlyusers=$user_id"]
-                catch {exec [lindex $execAnalyzer 0] [lindex $execAnalyzer 1] [lindex $execAnalyzer 2] [lindex $execAnalyzer 3] [lindex $execAnalyzer 4]} aux
-		}
+        #Processing var "informes"
+        
+        foreach elm $informes {
+       	switch $elm {
+       		1 { set all_users_p 1}
+       		2 { set all_communities_p 1}
+       		3 { set all_all_p 1}
+       		4 { set site_p 1}
+       	}
         }
-
-     }
-     if {[exists_and_not_null site_p]} {
-     	ns_log notice "Ejecuto script sólo para el sitio web"
-        set execAnalyzer [list "[get_user_tracking_dir]/www/awstats/cgi-bin/awstatsDirecto.pl" "-config=elane" "-update"]
-        catch {exec [lindex $execAnalyzer 0] [lindex $execAnalyzer 1] [lindex $execAnalyzer 2]} aux
-
-     }
+   	
+        if {[exists_and_not_null all_users_p]} {
+        	
+        	ns_log notice "USER-TRACKING-->every user"
+        	
+        	db_foreach user "select user_id  from cc_users" {
+         		ns_log notice "USER: $user_id"
+			set execAnalyzer [list "perl" "[user-tracking::get_user_tracking_dir]/www/awstats/cgi-bin/awstats_dotlrn.pl" "-config=site" "-update" "-onlyusers=$user_id"]        	     		
+   			catch {exec [lindex $execAnalyzer 0] [lindex $execAnalyzer 1] [lindex $execAnalyzer 2] [lindex $execAnalyzer 3] [lindex $execAnalyzer 4]} aux
+   		}
+        }
+        if {[exists_and_not_null all_communities_p]} {
+        	
+        	ns_log notice "USER-TRACKING-->every community"
+        	
+        	db_foreach community "select community_id from dotlrn_communities" {
+        	   ns_log notice "Community: $community_id"
+		   set execAnalyzer [list "perl" "[user-tracking::get_user_tracking_dir]/www/awstats/cgi-bin/awstats_dotlrn.pl" "-config=site" "-update" "-onlycoms=$community_id"]        		
+   		   catch {exec [lindex $execAnalyzer 0] [lindex $execAnalyzer 1] [lindex $execAnalyzer 2] [lindex $execAnalyzer 3] [lindex $execAnalyzer 4]} aux
+        	}
+        }
+    
+        if {[exists_and_not_null all_all_p]} {
+        	ns_log notice "USER-TRACKING-->every user in every community"
+        	db_foreach community "select community_id from dotlrn_communities" {
+        	     	db_foreach user "select user_id  from cc_users" {
+	       	     		ns_log notice "Community: $community_id - User: $user_id"
+				set execAnalyzer [list "perl" "[user-tracking::get_user_tracking_dir]/www/awstats/cgi-bin/awstats_dotlrn.pl" "-config=site" "-update" "-onlycoms=$community_id" "-onlyusers=$user_id"]        	     		
+                   catch {exec [lindex $execAnalyzer 0] [lindex $execAnalyzer 1] [lindex $execAnalyzer 2] [lindex $execAnalyzer 3] [lindex $execAnalyzer 4] [lindex $execAnalyzer 5]} aux
+   		}
+           }
+   
+        }
+        if {[exists_and_not_null site_p]} {
+           ns_log notice "USER-TRACKING-->site"
+           set execAnalyzer [list "perl" "[user-tracking::get_user_tracking_dir]/www/awstats/cgi-bin/awstats_dotlrn.pl" "-config=site" "-update"]        	     		
+           catch {exec [lindex $execAnalyzer 0] [lindex $execAnalyzer 1] [lindex $execAnalyzer 2] [lindex $execAnalyzer 2]} aux
+   
+        }
     }
 
     ad_proc -public select_children_communities {
@@ -157,28 +147,80 @@ namespace eval user-tracking {
      	
      	return [join $ComList]
      }
+     
+     ad_proc -public converts_date {
+     	fecha_larga 
+     } {
+     	Returns a pretty date
+     } {
+	set anyo [string range $fecha_larga 0 3]
+	set mes [string range $fecha_larga 4 5]
+	set dia [string range $fecha_larga 6 7]
+	set hor [string range $fecha_larga 8 9]
+	set min [string range $fecha_larga 10 11]
+	set seg [string range $fecha_larga 12 13]
+	return "$dia/$mes/$anyo - $hor:$min:$seg"
+     }
 
-    ad_proc -public write_users_file {
-    } {
-    	Writes users in db to usersinfo.txt
-    } {
+     ad_proc -public get_data_file_name {
+     	onlylines
+     	onlyuser
+     	config
+     	{year ""}
+     	{month ""}
+     } {
+     	Returs the name of the DataFileName related with these params
+     } {
     
-   	   #Leer un parámetro de config.tcl
-	   set logdir [ns_config "ns/parameters" serverlog]
-	   #Me quedo con lo que me interesa
-	   set patron "(.*)(\/(.)*\.log$)"
-	   regexp $patron $logdir all dir part2 ]
-	   append dir "/" 
-
-	   #Escribo fichero de users.txt
-	   set filename "${dir}awstat/userinfo.txt"
-	   ns_log notice "Escribiendo en $filename"	
-	   set config_file [open $filename w]
-	   db_foreach get_users "select person_id, first_names, last_name from persons" {
-	   	puts $config_file "$person_id \t $first_names $last_name"
-	   }   
-	   close $config_file 
+	set config_dir [acs_package_root_dir "user-tracking"]
+	append config_dir "/config"
+	set configFile [open "${config_dir}/awstats_dotlrn.${config}.conf" r]
+	
+	set linea [gets $configFile]
+	set fin [eof $configFile]
+	set patron "\^(DirData)=(.*)"
+	
+	while { ![eof $configFile] && !$fin} {
+		set fin [eof $configFile]
+		set linea [gets $configFile]	
+		if { [regexp $patron $linea todo part1 DirData] ==1 } {
+			set err "Hemos encontrado el patron"
+			set fin 1
+		}
 	}
-
+	
+	# Symbol " is needed in the config file
+	set data_dir [lindex [split $DirData {"}] 1]
+	close $configFile    
+	
+	# Creating DataFileName
+	set date [template::util::date::today]
+	if {![exists_and_not_null year]} {
+		set year "[template::util::date::get_property year $date]"
+	}
+	if {![exists_and_not_null month]} {
+		set month "[template::util::date::get_property month $date]"
+	}
+	if { [string length $month] == 1} {
+		set month "0${month}"
+	}
+	set DataFileName "${data_dir}/awstats_dotlrn${month}${year}.${config}"
+	
+	if {[exists_and_not_null onlyuser]} {
+		set onlyuser_aux [lsort -integer -increasing $onlyuser]
+		foreach user $onlyuser_aux {
+			append DataFileName "ou$user"
+		}
+	}
+	if {[exists_and_not_null onlylines]} {
+		set onlylines_aux [lsort -integer -increasing $onlylines]
+		foreach group $onlylines_aux {
+	   		append DataFileName "oc$group"
+		}
+	}
+	append DataFileName ".txt"
+	return $DataFileName
+}
+	
 }
 

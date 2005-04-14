@@ -19,9 +19,8 @@ ad_proc -private user-tracking::apm_callbacks::package_install {} {
 } {
 
 
-   #Leer un parámetro de config.tcl
+   #Reading logdir from config.tcl
    set logdir [ns_config "ns/parameters" serverlog]
-   #Me quedo con lo que me interesa
    set patron "(.*)(\/(.)*\.log$)"
    regexp $patron $logdir all dir part2 ]
    append dir "/"
@@ -32,14 +31,16 @@ ad_proc -private user-tracking::apm_callbacks::package_install {} {
    
    set ip [util_current_location]
    
-   #Busco ficheros de configuración
+   #Look for config files
    set ut_dir [acs_package_root_dir "user-tracking"]
-   append config_dir $ut_dir "/config" 
-   set files [exec "find" $config_dir "-maxdepth" "1" "-type" "f"] 
-   #Escribo los parámetros al final de cada fichero
+   append config_dir $ut_dir "/config"
+   set execls [list "ls" $config_dir]
+   set files [exec [lindex $execls 0] [lindex $execls 1]]
+   
+   #Writes parameters at the end of the awstats config file
    	
    for {set x 0} {$x<[llength $files]} {incr x} {
-   	set file_name [lindex $files $x]
+   	set file_name "${config_dir}/[lindex $files $x]"
    	
    	if { [file exists $file_name] == 1} {   
 
@@ -60,32 +61,25 @@ ad_proc -private user-tracking::apm_callbacks::package_install {} {
    }
 
 
-   # Escribo fichero de users.txt
-   exec "/bin/mkdir" ${dir}awstat
-   set touch [exec "/bin/touch" ${dir}awstat/userinfo.txt]
-   set filename "${dir}awstat/userinfo.txt"
-   ns_log notice "Escribiendo en $filename"	
-   set config_file [open $filename w]
-   db_foreach get_users "select person_id, first_names, last_name from persons" {
-   	puts $config_file "$person_id \t $first_names $last_name"
-   }   
-   close $config_file   
+   # Writing userinfo.txt file
+   #exec "/bin/mkdir" ${dir}awstat
+   #set touch [exec "/bin/touch" ${dir}awstat/userinfo.txt]
+   #set filename "${dir}awstat/userinfo.txt"
+   #ns_log notice "Escribiendo en $filename"	
+   #set config_file [open $filename w]
+   #db_foreach get_users "select person_id, first_names, last_name from persons" {
+   #	puts $config_file "$person_id \t $first_names $last_name"
+   #}   
+   #close $config_file   
    
-   set touch [exec "/bin/touch" ${config_dir}/AllowedUrls.conf]
-   set filename "${config_dir}/AllowedUrls.conf"	
-   ns_log notice "Escribiendo en $filename"	
-   set config_file [open $filename w]
-   puts $config_file $ip
+   #Needed in first release of user-tracking due to the use of cgi-bin
+   #set touch [exec "/bin/touch" ${config_dir}/AllowedUrls.conf]
+   #set filename "${config_dir}/AllowedUrls.conf"	
+   #ns_log notice "Escribiendo en $filename"	
+   #set config_file [open $filename w]
+   #puts $config_file $ip
 
-   close $config_file   
+   #close $config_file   
 
-
-
-
-
-   #Leer un parámetro del paquete
-   #set paquete [parameter::get -parameter "logsDir"]     
-   #Fijar un parámetro del paquete
-   #parameter::set_value  -parameter "logsDir" -value $dir  
      
 }

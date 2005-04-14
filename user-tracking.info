@@ -8,21 +8,23 @@
     <singleton-p>f</singleton-p>
     <auto-mount>user-tracking</auto-mount>
 
-    <version name="0.1d" url="http://openacs.org/repository/download/apm/user-tracking-0.1d.apm">
-        <owner url="mailto: pabloa@tid.es">Pablo Arozarena</owner>
-        <owner url="mailto:sergiog@tid.es">Sergio González</owner>
+    <version name="0.1d2" url="http://openacs.org/repository/download/apm/user-tracking-0.1d2.apm">
         <owner url="mailto:doa@tid.es">David Ortega</owner>
+        <owner url="mailto:sergiog@tid.es">Sergio González</owner>
+        <owner url="mailto: pabloa@tid.es">Pablo Arozarena</owner>
         <summary>Package for user tracking </summary>
-        <release-date>2004-11-03</release-date>
+        <release-date>2005-04-12</release-date>
         <vendor url="http://e-lane.org/">E-lane</vendor>
         <description format="text/html">The purpose behind this development is to ensure we track and retrieve knowledge about how end users are making use of the system. The main objective of this package will be to track user behaviour and activities, so that Professors and administrators can use this to understand how the system is used and make improvements in the learning process.</description>
 
-        <provides url="user-tracking" version="0.1d"/>
+        <provides url="user-tracking" version="0.1d2"/>
 
         <callbacks>
             <callback type="after-install"  proc="user-tracking::apm_callbacks::package_install"/>
         </callbacks>
         <parameters>
+        <!-- No version parameters -->
         </parameters>
+
     </version>
 </package>

@@ -9,7 +9,7 @@ ad_page_contract {
 
 
 }
-set page_title "Administración de user-tracking"
+set page_title "#user-tracking.Admin#"
 set context ""
 
 #Pages in this directory are only runnable by dotlrn-wide admins.

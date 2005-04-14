@@ -1,42 +1,44 @@
 
-
 ad_page_contract {
-    @author yon (yon@openforce.net)
-    @creation-date 2002-01-30
-    @version $Id$
+    @author doa (doa@tid.es)
+    @author sergiog (sergiog@tid.es)
+    @creation-date 2005-03-01
 } -query { 
-	{user_id ""}
-	{first_names ""}
-	{last_name ""}
-	{email ""}
-	{screen_name ""}
-	{user_id ""}
-	{registration_date ""}
-	{last_visit ""}
-	{total_posted ""}
-	{faq_posted ""}
-	{news_posted ""}
-	{surveys_posted ""}
-	{forum_posted ""}
-	{files_posted ""}
-} -properties {
-    first_names:onevalue
-    last_name:onevalue
-    email:onevalue
-    screen_name:onevalue
+    {type "general"}
+    {onlyuser ""}
+    {onlylines ""}    
+    {config "site"}
+    {nodata_p "0"}
+    {noloading "1"}
+    {pretype ""}
+    {month ""}
+    {year ""}
+    {mydate:array ""}
+    {user_id}
+} -properties {    
+    TotalUnique:onevalue
+    TotalPages:onevalue
+    TotalAsked:onevalue
+    NofMembers:onevalue
+    NofUsers:onevalue
+    LastVisit:onevalue
+    LastRegistration:onevalue
+    TotalVisits:onevalue
+    DataFileName:onevalue
+    FirstTime:onevalue
+    LastTime:onevalue
+    LastUp:onevalue
+    config:onevalue
+    pretype:onevalue   
+    datebox:onevalue
+    mydate:onevalue
+    today:onevalue
+    asked_day:onevalue
     user_id:onevalue
-    registration_date:onevalue
-    last_visit:onevalue
-    member_classes:multirow
-    member_clubs:multirow
-    member_subgroups:multirow
-    total_posted:onevalue
-    faq_posted:onevalue
-    news_posted:onevalue
-    surveys_posted:onevalue
-    forum_posted:onevalue
-    files_posted:onevalue
+    hidden:onevalue
+
 }
+
 
 if {![exists_and_not_null referer]} {
     set referer "[user-tracking::get_package_url]/users-stats"
@@ -54,7 +56,6 @@ if {![empty_string_p $user_id]} {
 }
 
 
-#Hay que modificar el titulo de la pagina
 set page_title [_ user-tracking.User_Stats]
 set context [list $page_title]
 
@@ -71,63 +72,137 @@ if {![empty_string_p $last_visit]} {
     set last_visit [lc_time_fmt $last_visit "%q"]
 }
 
-db_multirow member_classes select_member_classes {} {
-    set role_pretty_name [dotlrn_community::get_role_pretty_name -community_id $class_instance_id -rel_type $rel_type]
-}
-db_multirow member_clubs select_member_clubs {} {
-    set role_pretty_name [dotlrn_community::get_role_pretty_name -community_id $club_id -rel_type $rel_type]
-}
-db_multirow member_subgroups select_member_subgroups {} {
-    set role_pretty_name [dotlrn_community::get_role_pretty_name -community_id $community_id -rel_type $rel_type]
-}
-
-set package_key "faq"
-if {[db_0or1row select_package_exists {}]} {
-	set object_type "faq"
-	set faq_posted [db_string select_faq_count {} ]
+if {[exists_and_not_null year] & [exists_and_not_null month]} {
+	set datebox [dt_widget_datetime -default "$year-$month-01" mydate "months"]
+} elseif {[exists_and_not_null mydate(year)] & [exists_and_not_null mydate(month)]} {
+	set datebox [dt_widget_datetime -default "$mydate(year)-$mydate(month)-01" mydate "months"]
+	set year $mydate(year)
+	set month $mydate(month)
 } else {
-	set faq_posted 0
+set datebox [dt_widget_datetime -default now mydate "months"]
+	set year [template::util::date::get_property year [template::util::date::today]]
+	set month [template::util::date::get_property month [template::util::date::today]]
 }
 
-set package_key "news"
-if {[db_0or1row select_package_exists {}]} {
-	set object_type "content_item"    
-	set news_posted [db_string select_news_count {} ]
+set fmt "%Y-%m-%d"
+set today [clock seconds]
+set asked_date [clock scan "$year-$month-1"]
+
+set DataFileName [user-tracking::get_data_file_name "" $user_id $config $year $month]
+
+set hidden [export_vars -form {user_id}]
+
+
+if {$asked_date <= $today } {
+   set nodata_p 0
+   if {[file exists $DataFileName]} {
+      set nodata_p 1
+      set dataFile [open "$DataFileName" r]
+      
+      #Getting file map
+      set linea [gets $dataFile]
+      set fin [eof $dataFile]
+      set patron "(BEGIN_MAP) (.*)"
+      while { $fin == 0} {
+      	set linea [gets $dataFile]
+      	set fin [eof $dataFile]
+      	if { [regexp $patron $linea todo part1 SectionCount] ==1 } {
+      		set fin 1
+      	}
+      }
+      
+      set fin 0
+      set patron "^(\[A-Z\\_0-9\]*) (.*)"
+      while { $fin == 0} {
+      	set linea [gets $dataFile]
+      	set fin [eof $dataFile]
+      	if { [regexp $patron $linea todo part1 part2] ==1 } {
+      		set Map($part1) $part2 
+      	}
+      	if { $linea == "END_MAP"} {
+      		set fin 1
+      	}
+      }
+      
+      #Getting data in general section
+      
+      set pos $Map(POS_GENERAL)
+      seek $dataFile $pos
+      set linea [gets $dataFile]
+      set patron "(BEGIN_GENERAL) (.*)"
+      while { ![regexp $patron $linea todo part1 part2] } {	
+      	set linea [gets $dataFile]	
+      	if {[eof $dataFile]} {
+      		set part2 0
+      		break;
+      	}
+      }
+      set i $part2
+      
+      while { $i > 0} {	
+      	set linea [gets $dataFile]
+      	set campos [split $linea]
+      	switch [lindex $campos 0] {
+      		FirstTime { 
+      			set FirstTime [user-tracking::converts_date [lindex $campos 1]]
+      			}
+      		LastTime { 
+      			set LastTime [user-tracking::converts_date [lindex $campos 1]]
+      			}
+      		LastUpdate { 
+      			set LastUp [user-tracking::converts_date [lindex $campos 1]]
+      			}
+      		TotalVisits { 
+      			set TotalVisits [lindex $campos 1]
+      			}
+      		TotalUnique { 
+      			set TotalUnique [lindex $campos 1]
+      			}
+      		default {}
+      	}
+      	set i [expr $i - 1]
+      	if {[eof $dataFile]} { #Wrong file?
+      		break;
+      	}
+      }
+      
+      #Getting the number of visited pages
+      
+      set pos $Map(POS_DAY)
+      seek $dataFile $pos
+      set linea [gets $dataFile]
+      set patron "(BEGIN_DAY) (.*)"
+      while { ![regexp $patron $linea todo part1 part2] } {	
+      	set linea [gets $dataFile]	
+      	if {[eof $dataFile]} {
+      		set part2 0
+      		break;
+      	}
+      }
+      
+      set i $part2
+      
+      set TotalPages 0
+      set TotalAsked 0
+      
+      while { $i > 0} {	
+      	set linea [gets $dataFile]
+      	set campos [split $linea]
+      	set TotalPages [expr $TotalPages+ [lindex $campos 1]]
+      	set TotalAsked [expr $TotalAsked+ [lindex $campos 2]]
+      	set i [expr $i - 1]
+      	if {[eof $dataFile]} { #Wrong file?
+      		break;
+      	}
+      }
+      
+      close $dataFile
+   
 } else {
-	set news_posted 0
+  if {$noloading eq 0} {
+   	set nodata_p 1
+  }
 }
-
-set package_key "survey"
-if {[db_0or1row select_package_exists {}]} {
-	set object_type "survey_response"
-	set surveys_posted [db_string select_total_posts_by_type {} ]
-} else {
-	set surveys_posted 0
 }
-
-set package_key "forums"
-if {[db_0or1row select_package_exists {}]} {
-	set object_type "forums_message"
-	set forum_posted [db_string select_total_posts_by_type {} ]
-} else {
-	set forum_posted  0
-}
-
-set package_key "file-storage"
-if {[db_0or1row select_package_exists {}]} {
-	set object_type "file_storage_object"
-	set files_posted [db_string select_total_posts_by_type {} ]
-} else {
-	set files_posted 0
-}
-
-
-set total_posted [expr $faq_posted+$news_posted+$surveys_posted+$files_posted+$forum_posted]
-
-
-set class_instances_pretty_name [parameter::get -localize -parameter class_instances_pretty_name]
-set clubs_pretty_name [parameter::get -localize -parameter clubs_pretty_name]
-set subcommunities_pretty_name [parameter::get -localize -parameter subcommunities_pretty_name]
-
 ad_return_template
 

@@ -28,13 +28,13 @@ set referer "[user-tracking::get_package_url]/advanced-stats" %>
 	<if @Users@ eq "" and @Communities@ eq "">
 		#user-tracking.lt_No_stats#
 	</if> <else>
-		<if @Users@ eq "">
-			<a href="/user-tracking/lanza?config=class&onlylines=@Communities@"> #user-tracking.lt_View_Comm_Stats#</a>
+		<if @Users@ eq "">			
+			<a href="/user-tracking/advanced-card?onlylines=@Communities@">#user-tracking.lt_View_Comm_Stats#</a>
 		</if> <else>
-			<if @Communities@ eq "">
-				<a href="/user-tracking/lanza?config=user&onlyusers=@Users@">#user-tracking.lt_View_Users_Stats#</a>
-			</if><else>
-				<a href="/user-tracking/lanza?config=site&onlyusers=@Users@&onlylines=@Communities@"> #user-tracking.lt_View_Advanced_Stats#</a>
+			<if @Communities@ eq "">				
+				<a href="/user-tracking/advanced-card?onlyuser=@Users@">#user-tracking.lt_View_Users_Stats#</a>
+			</if><else>				
+				<a href="/user-tracking/advanced-card?onlylines=@Communities@&onlyuser=@Users@">#user-tracking.lt_View_Advanced_Stats#</a>
 			</else>
 		</else>
 	</else>

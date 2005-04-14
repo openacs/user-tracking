@@ -18,7 +18,7 @@ ad_require_permission [ad_conn package_id] "admin"
 
 
 set context [list [list "./site-card" "#user-tracking.lt_Site_Stats#"] "[_ user-tracking.lt_Site_Stats]"]
-set page_title [_ user-tracking.ut_Registration_Historic]
+set page_title [_ user-tracking.Registrations_history]
 
 # we have to query for pretty month and year separately because Oracle pads
 # month with spaces that we need to trim
@@ -44,20 +44,21 @@ template::list::create \
             label #user-tracking.month#
 	    display_col pretty_month
 	}
+        NofReg {
+            label "#user-tracking.registers_number#"
+	    display_col n_new
+	    html {align center}
+	}	
 	MaxReg {
-	    label "#user-tracking.registers#"
 	    display_template {
 	    	<img src=img/vh.png height=13 width=@registrations.temp1@>
 	    }
 	}
-        NofReg {
-            label "#user-tracking.registers_number#"
-	    display_col n_new
-	}
+
 
     } -filters {
         sort_key {}
-    }
+    } -html {align center}
 
 db_multirow -extend { 
     temp1

@@ -7,7 +7,7 @@
 <% set referer "[user-tracking::get_package_url]/users-stats" %>
 
 [<small>
-  <a href="/user-tracking/awstats/cgi-bin/lanza?config=site"><small>#user-tracking.lt_Site_Stats#</small></a>
+  <a href="site-card"><small>#user-tracking.lt_Site_Stats#</small></a>
   |
   <a href="communities-stats"><small>#user-tracking.lt_Communities_Stats_2#</small></a>
   |
