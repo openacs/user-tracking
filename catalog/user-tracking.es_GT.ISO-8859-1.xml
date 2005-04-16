@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="user-tracking" package_version="0.1d2" locale="es_ES" charset="ISO-8859-1">
+<message_catalog package_key="user-tracking" package_version="0.1d2" locale="es_GT" charset="ISO-8859-1">
 
   <msg key="Active_news">Noticias activas</msg>
   <msg key="add">a&amp;ntilde;adir</msg>
@@ -9,7 +9,7 @@
   <msg key="added_files_by">Ficheros añadidos</msg>
   <msg key="Added_news">Noticias añadidas</msg>
   <msg key="added_survey">Encuestas añadidas por:</msg>
-  <msg key="Admin">Administración de user-tracking</msg>
+  <msg key="Admin">Administración de  Rastreo de usuarios</msg>
   <msg key="Admin_options">Opciones de Administrador</msg>
   <msg key="admin_portlet">Administrando Rastreo de Usuarios</msg>
   <msg key="Administer">Administrar</msg>
@@ -120,7 +120,7 @@
   <msg key="perioricity">Perioricidad</msg>
   <msg key="Person_name">Nombre</msg>
   <msg key="Post_Date">Fecha de publicación</msg>
-  <msg key="pretty_name">User Tracking</msg>
+  <msg key="pretty_name">Rastreo de Usuarios</msg>
   <msg key="Readed_Messages">Mensajes leidos</msg>
   <msg key="Readed_News">Noticias leídas</msg>
   <msg key="Readed_Surveys">Encuestas visitadas</msg>
@@ -156,10 +156,10 @@
   <msg key="user_info">Información del usuario</msg>
   <msg key="User_Name">Nombre de usuario</msg>
   <msg key="User_Stats">Estadísticas de usuarios</msg>
-  <msg key="user_tracking_access_package">Acceso al paquete de User Tracking</msg>
-  <msg key="User_Tracking_Home">User Tracking</msg>
+  <msg key="user_tracking_access_package">Acceso al paquete de Rastreo de Usuarios</msg>
+  <msg key="User_Tracking_Home">Rastreo de Usuarios</msg>
   <msg key="user_tracking_managment">UserTracking Managment</msg>
-  <msg key="user_tracking_portlet">UserTracking</msg>
+  <msg key="user_tracking_portlet">Rastreo de Usuarios</msg>
   <msg key="Users">Usuarios</msg>
   <msg key="users_visits">Visitas por usuario</msg>
   <msg key="ut_Are_Admin">Participan como Administradores: %NofAdmin%</msg>
