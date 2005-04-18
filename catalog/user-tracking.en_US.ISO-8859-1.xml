@@ -11,7 +11,6 @@
   <msg key="added_survey">Survey added by</msg>
   <msg key="Admin">User-tracking administration</msg>
   <msg key="Admin_options">Admin Options</msg>
-  <msg key="admin_portlet">UserTracking Administration</msg>
   <msg key="Administer">Administer</msg>
   <msg key="all_communities">All communities</msg>
   <msg key="all_site">All the site</msg>
@@ -67,7 +66,7 @@
   <msg key="info_about">Info about</msg>
   <msg key="info_about_consulted_material">Info about consulted material</msg>
   <msg key="info_about_contributions">Info about contributions</msg>
-  <msg key="info_about_petitions">Info about petitions</msg>
+  <msg key="info_about_petitions">Info about visits</msg>
   <msg key="info_about_registered_users">Info about registered users</msg>
   <msg key="init_time">Init Time</msg>
   <msg key="instance_name">Instance name</msg>
@@ -158,8 +157,6 @@
   <msg key="User_Stats">Users Statistics</msg>
   <msg key="user_tracking_access_package">User Tracking access package</msg>
   <msg key="User_Tracking_Home">User Tracking Home</msg>
-  <msg key="user_tracking_managment">UserTracking Managment</msg>
-  <msg key="user_tracking_portlet">User Tracking</msg>
   <msg key="Users">Users</msg>
   <msg key="users_visits">Visits by user</msg>
   <msg key="ut_Are_Admin">Have an Admin role: %NofAdmin%</msg>

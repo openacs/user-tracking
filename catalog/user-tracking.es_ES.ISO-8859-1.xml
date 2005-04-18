@@ -11,7 +11,6 @@
   <msg key="added_survey">Encuestas añadidas por:</msg>
   <msg key="Admin">Administración de user-tracking</msg>
   <msg key="Admin_options">Opciones de Administrador</msg>
-  <msg key="admin_portlet">Administrando Rastreo de Usuarios</msg>
   <msg key="Administer">Administrar</msg>
   <msg key="all_communities">Todas las clases/comunidades</msg>
   <msg key="all_site">Todo el sitio web</msg>
@@ -67,7 +66,7 @@
   <msg key="info_about">Información sobre</msg>
   <msg key="info_about_consulted_material">Información sobre el material consultado</msg>
   <msg key="info_about_contributions">Información sobre contribuciones</msg>
-  <msg key="info_about_petitions">Información sobre peticiones</msg>
+  <msg key="info_about_petitions">Información sobre visitas</msg>
   <msg key="info_about_registered_users">Información sobre usuarios registrados</msg>
   <msg key="init_time">Hora de inicio</msg>
   <msg key="instance_name">Nombre de la instancia</msg>
@@ -158,8 +157,6 @@
   <msg key="User_Stats">Estadísticas de usuarios</msg>
   <msg key="user_tracking_access_package">Acceso al paquete de User Tracking</msg>
   <msg key="User_Tracking_Home">User Tracking</msg>
-  <msg key="user_tracking_managment">UserTracking Managment</msg>
-  <msg key="user_tracking_portlet">UserTracking</msg>
   <msg key="Users">Usuarios</msg>
   <msg key="users_visits">Visitas por usuario</msg>
   <msg key="ut_Are_Admin">Participan como Administradores: %NofAdmin%</msg>
