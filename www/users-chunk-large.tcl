@@ -9,6 +9,9 @@ ad_page_contract {
     user_id:onevalue
     users:multirow
 }
+if {![exists_and_not_null type]} {
+    set type admin
+}
 
 if {![exists_and_not_null referer]} {
     set referer "[user-tracking::get_package_url]/users-stats"

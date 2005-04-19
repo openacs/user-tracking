@@ -12,7 +12,7 @@ ad_page_contract {
 set user_id [ad_conn user_id]
 
 if {![exists_and_not_null referer]} {
-    set referer "[dotlrn::get_admin_url]/communities"
+    set referer "[user-tracking::get_package_url]/communities-stats"
 }
 
 ad_return_template

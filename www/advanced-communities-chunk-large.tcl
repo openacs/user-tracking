@@ -23,7 +23,7 @@ if {![exists_and_not_null referer]} {
 }
 
 
-form create community_search -action "/user-tracking/pruebas/advanced-stats"
+form create community_search -action "[user-tracking::get_package_url]/advanced-stats"
 
 element create community_search search_text \
     -label [_ dotlrn.Search] \
@@ -42,6 +42,18 @@ element create community_search referer \
     -datatype text \
     -widget hidden \
     -value $referer
+
+element create community_search Users \
+    -label "Users" \
+    -datatype text \
+    -widget hidden \
+    -value $Users   
+    
+element create community_search Communities \
+    -label "Communities" \
+    -datatype text \
+    -widget hidden \
+    -value $Communities           
 
 element create community_search type_request \
     -label type_request \
