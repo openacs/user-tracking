@@ -158,7 +158,7 @@
   <msg key="User_Stats">Estadísticas de usuarios</msg>
   <msg key="user_tracking_access_package">Acceso al paquete de Rastreo de Usuarios</msg>
   <msg key="User_Tracking_Home">Rastreo de Usuarios</msg>
-  <msg key="user_tracking_managment">UserTracking Managment</msg>
+  <msg key="user_tracking_managment">Manejor de Rastreo de Usuarios</msg>
   <msg key="user_tracking_portlet">Rastreo de Usuarios</msg>
   <msg key="Users">Usuarios</msg>
   <msg key="users_visits">Visitas por usuario</msg>

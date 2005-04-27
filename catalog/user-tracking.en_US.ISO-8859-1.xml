@@ -156,7 +156,10 @@
   <msg key="User_Name">User Name</msg>
   <msg key="User_Stats">Users Statistics</msg>
   <msg key="user_tracking_access_package">User Tracking access package</msg>
+  <msg key="admin_portlet">UserTracking Administration</msg>
   <msg key="User_Tracking_Home">User Tracking Home</msg>
+  <msg key="user_tracking_managment">UserTracking Managment</msg>
+  <msg key="user_tracking_portlet">User Tracking</msg>
   <msg key="Users">Users</msg>
   <msg key="users_visits">Visits by user</msg>
   <msg key="ut_Are_Admin">Have an Admin role: %NofAdmin%</msg>
