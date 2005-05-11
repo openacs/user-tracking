@@ -22,13 +22,16 @@
       <td valign="top" width="50%">
       <table class="element" border=0 cellpadding="0" cellspacing="0" width="100%">
      <tr>
-      	<td colspan="3" class="dark-line" height="0"><img src="/resources/dotlrn/spacer.gif"></td>
+      	<td colspan="3" class="dark-line" height="0"><img src="/resources/dotlrn/spacer.gif" alt="" ></td>
+
      </tr> 
       <tr>
-      	<td colspan="3" class="dark-line" height="0"><img src="/resources/dotlrn/spacer.gif"></td>
+      	<td colspan="3" class="dark-line" height="0"><img src="/resources/dotlrn/spacer.gif" alt="" ></td>
+
       </tr>
       <tr>
-   	<td class="light-line" width="1"><img src="/resources/dotlrn/spacer.gif" width="1"></td>
+   	<td class="light-line" width="1"><img src="/resources/dotlrn/spacer.gif" alt=""  width="1"></td>
+
    	<td class="element-text" width="100%">
    	<table cellspacing="0" cellpadding="0" class="element-content" width="100%">
    	<tr>
@@ -56,14 +59,17 @@
    	</tr>
    	</table>
     	</td>
-   	<td align="right" class="light-line" width="1"><img src="/resources/dotlrn/spacer.gif" width="1"></td>
+   	<td align="right" class="light-line" width="1"><img src="/resources/dotlrn/spacer.gif" alt=""  width="1"></td>
+
       </tr>
   
     <tr>
-      	<td colspan="3" class="dark-line" height="20"><img src="/resources/dotlrn/spacer.gif"></td>
+      	<td colspan="3" class="dark-line" height="20"><img src="/resources/dotlrn/spacer.gif" alt="" ></td>
+
      </tr>   
       <tr>
-   	<td class="light-line" width="1"><img src="/resources/dotlrn/spacer.gif" width="1"></td>
+   	<td class="light-line" width="1"><img src="/resources/dotlrn/spacer.gif" alt=""  width="1"></td>
+
    	<td class="element-text" width="100%">
    	<table cellspacing="0" cellpadding="0" class="element-content" width="100%">
    	<tr>
@@ -74,10 +80,12 @@
    	</tr>
    	</table>
  	</td>
-   	<td align="right" class="light-line" width="1"><img src="/resources/dotlrn/spacer.gif" width="1"></td>
+   	<td align="right" class="light-line" width="1"><img src="/resources/dotlrn/spacer.gif" alt=""  width="1"></td>
+
       </tr>      
       <tr>
-      <td colspan="3" class="light-line" width="1"><img src="/resources/dotlrn/spacer.gif"></td>
+      <td colspan="3" class="light-line" width="1"><img src="/resources/dotlrn/spacer.gif" alt="" ></td>
+
       </tr>
 
       
@@ -88,13 +96,16 @@
      <table class="element" border="0" cellpadding="0" cellspacing="0" width="100%">
 
      <tr>
-      	<td colspan="3" class="dark-line" height="0"><img src="/resources/dotlrn/spacer.gif"></td>
+      	<td colspan="3" class="dark-line" height="0"><img src="/resources/dotlrn/spacer.gif" alt="" ></td>
+
      </tr> 
       <tr>
-      	<td colspan="3" class="dark-line" height="0"><img src="/resources/dotlrn/spacer.gif"></td>
+      	<td colspan="3" class="dark-line" height="0"><img src="/resources/dotlrn/spacer.gif" alt="" ></td>
+
       </tr>
       <tr>
-   	<td class="light-line" width="1"><img src="/resources/dotlrn/spacer.gif" width="1"></td>
+   	<td class="light-line" width="1"><img src="/resources/dotlrn/spacer.gif" alt=""  width="1"></td>
+
    	<td class="element-text" width="100%">
    	<table cellspacing="0" cellpadding="0" class="element-content" width="100%">
    	<tr>
@@ -125,13 +136,16 @@
    	</tr>
    	</table>
     	</td>
-   	<td align="right" class="light-line" width="1"><img src="/resources/dotlrn/spacer.gif" width="1"></td>
+   	<td align="right" class="light-line" width="1"><img src="/resources/dotlrn/spacer.gif" alt=""  width="1"></td>
+
       </tr>
 
-   	<tr><td colspan="3" class="dark-line" height="20"><img src="/resources/dotlrn/spacer.gif"></td></tr>
+   	<tr><td colspan="3" class="dark-line" height="20"><img src="/resources/dotlrn/spacer.gif" alt="" ></td></tr>
+
    	<tr>
 
-     		<td class="light-line" width="1"><img src="/resources/dotlrn/spacer.gif" width="1"></td>
+     		<td class="light-line" width="1"><img src="/resources/dotlrn/spacer.gif" alt=""  width="1"></td>
+
    		<td class="element-text" width="100%">
    		   <table cellspacing="0" cellpadding="0" class="element-content" width="100%">
    		   <tr>
@@ -149,15 +163,19 @@
    		   </tr>
    		   </table>
       		</td>
-      		<td align="right" class="light-line" width="1"><img src="/resources/dotlrn/spacer.gif" width="1"></td>
+      		<td align="right" class="light-line" width="1"><img src="/resources/dotlrn/spacer.gif" alt=""  width="1"></td>
+
    	</tr>
 
    	<tr>
-   	   <td colspan="3" class="dark-line" height="20"><img src="/resources/dotlrn/spacer.gif"></td>
+   	   <td colspan="3" class="dark-line" height="20"><img src="/resources/dotlrn/spacer.gif" alt="" ></td>
+
       	</tr> 
-   	<tr><td colspan="3" class="dark-line" height="0"><img src="/resources/dotlrn/spacer.gif"></td></tr>
+   	<tr><td colspan="3" class="dark-line" height="0"><img src="/resources/dotlrn/spacer.gif" alt="" ></td></tr>
+
    	<tr>
-     		<td class="light-line" width="1"><img src="/resources/dotlrn/spacer.gif" width="1"></td>
+     		<td class="light-line" width="1"><img src="/resources/dotlrn/spacer.gif" alt=""  width="1"></td>
+
    		<td class="element-text" width="100%">
    		   <table cellspacing="0" cellpadding="0" class="element-content" width="100%">
    		   <tr>
@@ -175,14 +193,18 @@
    		   </tr>
    		   </table>
       		</td>
-      		<td align="right" class="light-line" width="1"><img src="/resources/dotlrn/spacer.gif" width="1"></td>
+      		<td align="right" class="light-line" width="1"><img src="/resources/dotlrn/spacer.gif" alt=""  width="1"></td>
+
    	</tr>	
    	<tr>
-   	   <td colspan="3" class="dark-line" height="20"><img src="/resources/dotlrn/spacer.gif"></td>
+   	   <td colspan="3" class="dark-line" height="20"><img src="/resources/dotlrn/spacer.gif" alt="" ></td>
+
       	</tr> 
-   	<tr><td colspan="3" class="dark-line" height="0"><img src="/resources/dotlrn/spacer.gif"></td></tr>
+   	<tr><td colspan="3" class="dark-line" height="0"><img src="/resources/dotlrn/spacer.gif" alt="" ></td></tr>
+
    	<tr>
-     		<td class="light-line" width="1"><img src="/resources/dotlrn/spacer.gif" width="1"></td>
+     		<td class="light-line" width="1"><img src="/resources/dotlrn/spacer.gif" alt=""  width="1"></td>
+
    		<td class="element-text" width="100%">
    		   <table cellspacing="0" cellpadding="0" class="element-content" width="100%">
    		   <tr>
@@ -200,10 +222,12 @@
    		   </tr>
    		   </table>
       		</td>
-      		<td align="right" class="light-line" width="1"><img src="/resources/dotlrn/spacer.gif" width="1"></td>
+      		<td align="right" class="light-line" width="1"><img src="/resources/dotlrn/spacer.gif" alt=""  width="1"></td>
+
    	</tr>	
    	<tr>
-   	<td colspan="3" class="light-line" width="1"><img src="/resources/dotlrn/spacer.gif"></td>
+   	<td colspan="3" class="light-line" width="1"><img src="/resources/dotlrn/spacer.gif" alt="" ></td>
+
    	</tr>
    	   </if>
    <else>
@@ -213,13 +237,16 @@
 <else>
     <table class="element" border="0" cellpadding="0" cellspacing="0" width="100%">
     <tr>
-      	<td colspan="3" class="dark-line" height="0"><img src="/resources/dotlrn/spacer.gif"></td>
+      	<td colspan="3" class="dark-line" height="0"><img src="/resources/dotlrn/spacer.gif" alt="" ></td>
+
     </tr> 
     <tr>
-      	<td colspan="3" class="dark-line" height="0"><img src="/resources/dotlrn/spacer.gif"></td>
+      	<td colspan="3" class="dark-line" height="0"><img src="/resources/dotlrn/spacer.gif" alt="" ></td>
+
     </tr>
     <tr>
-   	<td class="light-line" width="1"><img src="/resources/dotlrn/spacer.gif" width="1"></td>
+   	<td class="light-line" width="1"><img src="/resources/dotlrn/spacer.gif" alt=""  width="1"></td>
+
    	<td class="element-text" width="100%">
    	<table cellspacing="0" cellpadding="0" class="element-content" width="100%">
    	<tr>
@@ -238,7 +265,8 @@
    	</tr>
    	</table>
     	</td>
-   	<td align="right" class="light-line" width="1"><img src="/resources/dotlrn/spacer.gif" width="1"></td>
+   	<td align="right" class="light-line" width="1"><img src="/resources/dotlrn/spacer.gif" alt=""  width="1"></td>
+
     </tr>
     </table>
 </else>
