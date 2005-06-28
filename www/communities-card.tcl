@@ -41,6 +41,7 @@ ad_page_contract {
     NofMembers:onevalue
     NofUsers:onevalue
     NofAdmin:onevalue    
+    LastLine:onevalue
 
 }
 
@@ -110,7 +111,7 @@ set NofAdmin [db_string select_members_count_by_type {} ]
 
 set DataFileName [user-tracking::get_data_file_name $community_id "" $config $year $month]
 set hidden [export_vars -form {community_id}]
-set hidden2 [export_vars -form { {config} {url "communities-card"} {onlylines $community_id} }]
+set LastLine ""
 
 if {$asked_date <= $today } {
 
@@ -180,6 +181,9 @@ if {$asked_date <= $today } {
       		TotalUnique { 
       			set TotalUnique [lindex $campos 1]
       			}
+      		LastLine { 
+      			set LastLine [user-tracking::converts_date [lindex $campos 1]]
+      			} 
       		default {}
       	}
       	set i [expr $i - 1]
@@ -268,5 +272,7 @@ if {$asked_date <= $today } {
      }
 }
 }
+set hidden2 [export_vars -form { {config} {url "communities-card"} {onlylines $community_id} {year $year} {month $month} {LastTime $LastLine} }]
+
 ad_return_template
 

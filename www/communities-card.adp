@@ -239,7 +239,7 @@
    	</tr>
    	   </if>
    <else>
-      <include src="loading" url="communities-card?community_id=@community_id@&" onlylines="@community_id@" onlyuser="" config="@config@" type="@type@" year="@year@" month="@month@">
+      <include src="loading" url="communities-card?community_id=@community_id@&" onlylines="@community_id@" onlyuser="" config="@config@" type="@type@" year="@year@" month="@month@" LastTime="@LastLine@">
    </else>
 </if>
 <else>

@@ -36,6 +36,7 @@ ad_page_contract {
     asked_day:onevalue
     user_id:onevalue
     hidden:onevalue
+    LastLine:onevalue
 
 }
 
@@ -95,6 +96,8 @@ set hidden [export_vars -form {user_id}]
 
 if {$asked_date <= $today } {
    set nodata_p 0
+   set LastLine ""
+   
    if {[file exists $DataFileName]} {
       set nodata_p 1
       set dataFile [open "$DataFileName" r]
@@ -158,6 +161,9 @@ if {$asked_date <= $today } {
       		TotalUnique { 
       			set TotalUnique [lindex $campos 1]
       			}
+      		LastLine { 
+      			set LastLine [user-tracking::converts_date [lindex $campos 1]]
+      			} 
       		default {}
       	}
       	set i [expr $i - 1]

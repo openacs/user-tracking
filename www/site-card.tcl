@@ -42,6 +42,7 @@ ad_page_contract {
     asked_day:onevalue
     server:onevalue
     system_name:onevalue
+    LastLine:onevalue
 }
 
 
@@ -95,6 +96,7 @@ set DataFileName [user-tracking::get_data_file_name $onlylines $onlyuser $config
        
 if {$asked_date <= $today } {
    set nodata_p 0
+   set LastLine ""
    if {[file exists $DataFileName]} {
       set nodata_p 1
       set LastRegistration_ansi [lc_time_system_to_conn $last_registration]
@@ -164,6 +166,9 @@ if {$asked_date <= $today } {
       		TotalUnique { 
       			set TotalUnique [lindex $campos 1]
       			}
+      		LastLine { 
+      			set LastLine [user-tracking::converts_date [lindex $campos 1]]
+      			}      			
       		default {}
       	}
       	set i [expr $i - 1]
@@ -193,9 +198,12 @@ if {$asked_date <= $today } {
       
       while { $i > 0} {	
       	set linea [gets $dataFile]
+      	if { $linea == "END_DAY" } {
+      		break;
+      	}
       	set campos [split $linea]
-      	set TotalPages [expr $TotalPages+ [lindex $campos 1]]
-      	set TotalAsked [expr $TotalAsked+ [lindex $campos 2]]
+      	set TotalPages [expr $TotalPages + [lindex $campos 1]]
+      	set TotalAsked [expr $TotalAsked + [lindex $campos 2]]
       	set i [expr $i - 1]
       	if {[eof $dataFile]} { #Wrong file?
       		break;

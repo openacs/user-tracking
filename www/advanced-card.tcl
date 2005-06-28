@@ -32,6 +32,7 @@ ad_page_contract {
     community_id:onevalue
     onlyuser:onevalue
     onlylines:onevalue
+    LastLine:onevalue
 
 }
 set user_id $onlyuser
@@ -237,7 +238,7 @@ template::list::create \
 
 set DataFileName [user-tracking::get_data_file_name $onlylines $onlyuser $config $year $month]
 set hidden [export_vars -form {{onlylines $community_id} {onlyuser $user_id}}]
-set hidden2 [export_vars -form { {config} {url "advanced-card"} {onlylines $community_id} {onlyuser $user_id}}]
+set LastLine ""
 
 if {$asked_date <= $today } {
 
@@ -306,6 +307,9 @@ if {[file exists $DataFileName]} {
    		TotalUnique { 
    			set TotalUnique [lindex $campos 1]
    			}
+      		LastLine { 
+      			set LastLine [user-tracking::converts_date [lindex $campos 1]]
+      			} 
    		default {}
    	}
    	set i [expr $i - 1]
@@ -394,5 +398,7 @@ if {[file exists $DataFileName]} {
   }
 }
 }
+set hidden2 [export_vars -form { {config} {url "advanced-card"} {onlylines $community_id} {onlyuser $user_id} {year $year} {month $month} {LastTime $LastLine} }]
+
 ad_return_template
 

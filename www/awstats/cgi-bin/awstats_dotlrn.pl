@@ -7,7 +7,7 @@
 # See AWStats documentation (in docs/ directory) for all setup instructions.
 #------------------------------------------------------------------------------
 # $Revision$ - $Author$ - $Date$
-# $Modifications by Sergio Gonzalez, TID, E-Lane proyect
+# $Modifications by Sergio Gonzalez, Pablo Muñoz and David Ortega, TID, E-Lane project
 require 5.005;
 
 #$|=1;
@@ -2141,8 +2141,8 @@ sub Read_History_With_TmpUpdate {
                                 if ($field[4]) { $LastLineChecksum=int($field[4]); }
                                 next;
                         }
-                        if ($field[0] eq 'FirstTime' || $field[0] eq "${xmlrb}FirstTime")       { if (! $FirstTime{$year.$month} || $FirstTime{$year.$month} > int($field[1])) { $FirstTime{$year.$month}=int($field[1]); }; next; }
-                        if ($field[0] eq 'LastTime' || $field[0] eq "${xmlrb}LastTime")        { if (! $LastTime{$year.$month} || $LastTime{$year.$month} < int($field[1])) { $LastTime{$year.$month}=int($field[1]); }; next; }
+                        if ($field[0] eq 'FirstTime' || $field[0] eq "${xmlrb}FirstTime")       { if (! $FirstTime{$year.$month} || $FirstTime{$year.$month} > int($field[1])) { $FirstTime{$year.$month}=int($field[1]);}; next; }
+                        if ($field[0] eq 'LastTime' || $field[0] eq "${xmlrb}LastTime")        { if (! $LastTime{$year.$month} || $LastTime{$year.$month} < int($field[1])) { $LastTime{$year.$month}=int($field[1]);}; next; }
                         if ($field[0] eq 'LastUpdate' || $field[0] eq "${xmlrb}LastUpdate")      {
                                 if ($LastUpdate < $field[1]) {
                                         $LastUpdate=int($field[1]);
@@ -6025,20 +6025,22 @@ if ($FrameName eq 'index') {
 # Build ListOfYears list with all existing years
 if ($Debug) { debug("Scan for last history files into DirData='$DirData'"); }
 $lastyearbeforeupdate=0;
-opendir(DIR,"$DirData");
-foreach (grep /^$PROG(\d\d)(\d\d\d\d)$FileSuffix\.txt(|\.gz)$/, sort readdir DIR) {
-        /^$PROG(\d\d)(\d\d\d\d)$FileSuffix\.txt(|\.gz)$/;
-        if (! $ListOfYears{"$2"} || "$1" gt $ListOfYears{"$2"}) {
-                $ListOfYears{"$2"}="$1";        # ListOfYears contains max month found
-                if ("$2" gt $lastyearbeforeupdate) { $lastyearbeforeupdate="$2"; }
-        }
-}
-close DIR;
+#opendir(DIR,"$DirData");
+#foreach (grep /^$PROG(\d\d)(\d\d\d\d)$FileSuffix\.txt(|\.gz)$/, sort readdir DIR) {
+#        /^$PROG(\d\d)(\d\d\d\d)$FileSuffix\.txt(|\.gz)$/;
+#        if (! $ListOfYears{"$2"} || "$1" gt $ListOfYears{"$2"}) {
+#                $ListOfYears{"$2"}="$1";        # ListOfYears contains max month found
+#                if ("$2" gt $lastyearbeforeupdate) { $lastyearbeforeupdate="$2"; }
+#        }
+#}
+#close DIR;
+#commented by e-lane
 
 # Get value for LastLine
 if ($lastyearbeforeupdate) {
         # Read 'general' section of last history file for LastLine
-        &Read_History_With_TmpUpdate($lastyearbeforeupdate,$ListOfYears{$lastyearbeforeupdate},0,0,"general");
+#        &Read_History_With_TmpUpdate($lastyearbeforeupdate,$ListOfYears{$lastyearbeforeupdate},0,0,"general");
+        &Read_History_With_TmpUpdate($YearRequired,$MonthRequired,0,0,"general");
 }
 if ($Debug) {
         debug("Last year=$lastyearbeforeupdate - Last month=$ListOfYears{$lastyearbeforeupdate}");
@@ -6333,7 +6335,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {        
                 my $yearmonthdayrecord=sprintf("$dateparts[2]%02i%02i",$dateparts[1],$dateparts[0]);
                 my $timerecord=((int("$yearmonthdayrecord")*100+$dateparts[3])*100+$dateparts[4])*100+$dateparts[5];
 
-                # E-lane
+                # E-lane, calculating moments in which more hits are produced
                 $date = $timerecord;
                 if($lastdate == 0){
                     $counter = 0;
@@ -6374,7 +6376,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {        
                     $counter = 1;
                     $lastdate = $date;
                 }
-                
+                #E-lane end
 
                 # Check date
                 #-----------------------
@@ -6462,6 +6464,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {        
                         if ($lastprocessedmonth) {
                                 # We save data of processed month
                                 &Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,1,"all",($lastlinenb+$NbOfLinesParsed),$lastlineoffset,&CheckSum($line));
+                               # &Read_History_With_TmpUpdate($YearRequired,$MonthRequired,1,1,"all",($lastlinenb+$NbOfLinesParsed),$lastlineoffset,&CheckSum($line)); 
                                 $counterforflushtest=0;        # We reset counterforflushtest
                         }
                         $lastprocessedyearmonth=sprintf("%04i%02i",$lastprocessedyear=$yearrecord,$lastprocessedmonth=$monthrecord);
@@ -7380,7 +7383,8 @@ END_ERROR_TEXT
                                                 print " _url_p:".(scalar keys %_url_p)." _url_k:".(scalar keys %_url_k)." _url_e:".(scalar keys %_url_e)." _url_x:".(scalar keys %_url_x)."\n";
                                                 print " _waithost_e:".(scalar keys %_waithost_e)." _waithost_l:".(scalar keys %_waithost_l)." _waithost_s:".(scalar keys %_waithost_s)." _waithost_u:".(scalar keys %_waithost_u)."\n";
                                         }
-                                        &Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,1,"all",($lastlinenb+$NbOfLinesParsed),$lastlineoffset,&CheckSum($_));
+#                                        &Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,1,"all",($lastlinenb+$NbOfLinesParsed),$lastlineoffset,&CheckSum($_));
+                                        &Read_History_With_TmpUpdate($YearRequired,$MonthRequired,1,1,"all",($lastlinenb+$NbOfLinesParsed),$lastlineoffset,&CheckSum($_));
                                         &GetDelaySinceStart(1);        $NbOfLinesShowsteps=1;
                                 }
                         }
@@ -7405,10 +7409,10 @@ END_ERROR_TEXT
                  chomp $line; $line =~ s/\r$//;
                 if (! $NbOfLinesParsed) {
                         # TODO If there was no lines parsed (log was empty), we only update LastUpdate line with YYYYMMDDHHMMSS 0 0 0 0 0
-                        &Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,1,"all",($lastlinenb+$NbOfLinesParsed),$lastlineoffset,&CheckSum($line));
+                        &Read_History_With_TmpUpdate($YearRequired,$MonthRequired,1,1,"all",($lastlinenb+$NbOfLinesParsed),$lastlineoffset,&CheckSum($line)); 
                 }
                 else {
-                        &Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,1,"all",($lastlinenb+$NbOfLinesParsed),$lastlineoffset,&CheckSum($line));
+                        &Read_History_With_TmpUpdate($YearRequired,$MonthRequired,1,1,"all",($lastlinenb+$NbOfLinesParsed),$lastlineoffset,&CheckSum($line));
                 }
         }
 
@@ -7522,10 +7526,10 @@ if (scalar keys %HTMLOutput) {
                 for (my $ix=12; $ix>=1; $ix--) {
                         my $monthix=sprintf("%02s",$ix);
                         if ($MonthRequired eq 'all' || $monthix eq $MonthRequired) {
-                                &Read_History_With_TmpUpdate($YearRequired,$monthix,0,0,"all");                                # Read full history file
+                                &Read_History_With_TmpUpdate($YearRequired,$monthix,0,0,"all");             # Read full history file
                         }
                         elsif (($HTMLOutput{'main'} && $ShowMonthStats) || $HTMLOutput{'alldays'}) {
-                                &Read_History_With_TmpUpdate($YearRequired,$monthix,0,0,"general time");        # Read general and time sections.
+                                &Read_History_With_TmpUpdate($YearRequired,$monthix,0,0,"general time");    # Read general and time sections.
                         }
                 }
         }

@@ -151,7 +151,7 @@
                <input type="submit" value="#user-tracking.see#"/>
                </form>
                </center>
-               <ul><li><a href="loading2?config=@config@">#user-tracking.update_data#</a></li></ul>
+               <ul><li><a href="loading2?config=@config@&LastTime=@LastLine@&month=@month@&year=@year@">#user-tracking.update_data#</a></li></ul>
    	   </td>
    	</tr>
    	</table>
@@ -251,7 +251,7 @@
    	</tr>
    	   </if>
    <else>
-      <include src="loading" url="site-card?" onlylines="@onlylines@" onlyuser="@onlyuser@" config="@config@" type="@type@" year="@year@" month="@month@">
+      <include src="loading" url="site-card?" onlylines="@onlylines@" onlyuser="@onlyuser@" config="@config@" type="@type@" year="@year@" month="@month@" LastTime="@LastLine@">
    </else>
 </if>
 <else>

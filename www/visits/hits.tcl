@@ -47,7 +47,7 @@ while { $fin == 0} {
 
 #Getting data about maximum hits
 
-set pos $Map(POS_EXTRA_9)
+set pos $Map(POS_EXTRA_7)
 seek $dataFile $pos
 set linea [gets $dataFile]
 set patron "(PETITION_BEGIN) (.*)"

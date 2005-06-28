@@ -231,7 +231,7 @@
    	</tr>
    	   </if>
    <else>
-      <include src="loading" url="advanced-card?community_id=@community_id@&" onlylines="@onlylines@" onlyuser="@onlyuser@" config="@config@" type="@type@" year="@year@" month="@month@">
+      <include src="loading" url="advanced-card?community_id=@community_id@&" onlylines="@onlylines@" onlyuser="@onlyuser@" config="@config@" type="@type@" year="@year@" month="@month@" LastTime="@LastLine@">
    </else>
 </if>
 <else>
