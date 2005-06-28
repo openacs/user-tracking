@@ -85,14 +85,15 @@ namespace eval user-tracking {
        		4 { set site_p 1}
        	}
         }
-   	
+	set binPerl [parameter::get -parameter "PerlPath"]
+                   	
         if {[exists_and_not_null all_users_p]} {
         	
         	ns_log notice "USER-TRACKING-->every user"
         	
         	db_foreach user "select user_id  from cc_users" {
          		ns_log notice "USER: $user_id"
-			set execAnalyzer [list "perl" "[user-tracking::get_user_tracking_dir]/www/awstats/cgi-bin/awstats_dotlrn.pl" "-config=site" "-update" "-onlyusers=$user_id"]        	     		
+			set execAnalyzer [list "$binPerl" "[user-tracking::get_user_tracking_dir]/www/awstats/cgi-bin/awstats_dotlrn.pl" "-config=site" "-update" "-onlyusers=$user_id"]        	     		
    			catch {exec [lindex $execAnalyzer 0] [lindex $execAnalyzer 1] [lindex $execAnalyzer 2] [lindex $execAnalyzer 3] [lindex $execAnalyzer 4]} aux
    		}
         }
@@ -102,7 +103,7 @@ namespace eval user-tracking {
         	
         	db_foreach community "select community_id from dotlrn_communities" {
         	   ns_log notice "Community: $community_id"
-		   set execAnalyzer [list "perl" "[user-tracking::get_user_tracking_dir]/www/awstats/cgi-bin/awstats_dotlrn.pl" "-config=site" "-update" "-onlycoms=$community_id"]        		
+		   set execAnalyzer [list "$binPerl" "[user-tracking::get_user_tracking_dir]/www/awstats/cgi-bin/awstats_dotlrn.pl" "-config=site" "-update" "-onlycoms=$community_id"]        		
    		   catch {exec [lindex $execAnalyzer 0] [lindex $execAnalyzer 1] [lindex $execAnalyzer 2] [lindex $execAnalyzer 3] [lindex $execAnalyzer 4]} aux
         	}
         }
@@ -112,7 +113,7 @@ namespace eval user-tracking {
         	db_foreach community "select community_id from dotlrn_communities" {
         	     	db_foreach user "select user_id  from cc_users" {
 	       	     		ns_log notice "Community: $community_id - User: $user_id"
-				set execAnalyzer [list "perl" "[user-tracking::get_user_tracking_dir]/www/awstats/cgi-bin/awstats_dotlrn.pl" "-config=site" "-update" "-onlycoms=$community_id" "-onlyusers=$user_id"]        	     		
+				set execAnalyzer [list "$binPerl" "[user-tracking::get_user_tracking_dir]/www/awstats/cgi-bin/awstats_dotlrn.pl" "-config=site" "-update" "-onlycoms=$community_id" "-onlyusers=$user_id"]        	     		
                    catch {exec [lindex $execAnalyzer 0] [lindex $execAnalyzer 1] [lindex $execAnalyzer 2] [lindex $execAnalyzer 3] [lindex $execAnalyzer 4] [lindex $execAnalyzer 5]} aux
    		}
            }
@@ -120,7 +121,7 @@ namespace eval user-tracking {
         }
         if {[exists_and_not_null site_p]} {
            ns_log notice "USER-TRACKING-->site"
-           set execAnalyzer [list "perl" "[user-tracking::get_user_tracking_dir]/www/awstats/cgi-bin/awstats_dotlrn.pl" "-config=site" "-update"]        	     		
+           set execAnalyzer [list "$binPerl" "[user-tracking::get_user_tracking_dir]/www/awstats/cgi-bin/awstats_dotlrn.pl" "-config=site" "-update"]        	     		
            catch {exec [lindex $execAnalyzer 0] [lindex $execAnalyzer 1] [lindex $execAnalyzer 2] [lindex $execAnalyzer 2]} aux
    
         }

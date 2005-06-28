@@ -100,7 +100,8 @@ ad_progress_bar_begin \
 
 ns_write "<h2>$message</h2><blockquote>"
 
-set execAnalyzer [list "perl" "[user-tracking::get_user_tracking_dir]/www/awstats/cgi-bin/awstats_dotlrn.pl" "-config=$config" "-update" "-onlycoms=$onlylines" "-onlyusers=$onlyuser" "-month=$month" $logresolvemerge "-year=$year"]
+set binPerl [parameter::get -parameter "PerlPath"]
+set execAnalyzer [list "$binPerl" "[user-tracking::get_user_tracking_dir]/www/awstats/cgi-bin/awstats_dotlrn.pl" "-config=$config" "-update" "-onlycoms=$onlylines" "-onlyusers=$onlyuser" "-month=$month" $logresolvemerge "-year=$year"]
 ns_log notice "$execAnalyzer"
 catch {exec [lindex $execAnalyzer 0] [lindex $execAnalyzer 1] [lindex $execAnalyzer 2] [lindex $execAnalyzer 3] [lindex $execAnalyzer 7] [lindex $execAnalyzer 8] [lindex $execAnalyzer 4] [lindex $execAnalyzer 5] [lindex $execAnalyzer 6]} aux
 ns_log notice $aux
