@@ -21,9 +21,6 @@ if {![exists_and_not_null onlyuser] & ![exists_and_not_null onlylines]} {
 	set onlyuser [string trimleft $onlyuser " "]
 }
 
-if { [string length $month] == 1} {
-	set month "0${month}"
-}
 
 set logs [ns_config "ns/server/[ns_info server]/module/nslog" file] 
 set patron "(.*)([ns_info server]\.log$)"
@@ -34,6 +31,11 @@ set todayyear [template::util::date::get_property year [template::util::date::to
 set todaymonth [template::util::date::get_property month [template::util::date::today]]
 set todayday [template::util::date::get_property day [template::util::date::today]]
 
+if { [string length $month] == 2} {
+	if { [string index $month 0] == 0} {
+		set month [string index $month 1]
+	}
+}
    if {$month < 12} {
    	set nextmonth [expr $month +1]
    	set nextyear $year
@@ -44,6 +46,9 @@ set todayday [template::util::date::get_property day [template::util::date::toda
    if { [string length $nextmonth] == 1} {
 	set nextmonth "0${nextmonth}"
    }   
+   if { [string length $month] == 1} {
+	set month "0${month}"
+   }
 
 if {[exists_and_not_null LastTime]} {
       set campos [split $LastTime "/-"]
@@ -62,10 +67,10 @@ if {[exists_and_not_null LastTime]} {
               append expresion ",$x"
            }
            append expresion "\]"
-           set logresolvemerge "-LogFile=[user-tracking::get_user_tracking_dir]/tools/logresolvemerge.pl ${logdir}elane.log.$year-$month-${expresion}* ${logdir}elane.log |"
+           set logresolvemerge "-LogFile=[user-tracking::get_user_tracking_dir]/tools/logresolvemerge.pl ${logs}.$year-$month-${expresion}* ${logs} |"
            ns_log notice $logresolvemerge
         } else {
-           set logresolvemerge "-LogFile=${logdir}elane.log"
+           set logresolvemerge "-LogFile=${logs}"
         }
       } else {
       	if {[expr $lastday + 1] <= [template::util::date::get_property days_in_month "$lastyear$lastmonth"] } {
@@ -75,19 +80,22 @@ if {[exists_and_not_null LastTime]} {
            }
            append expresion "\]"
            ns_log notice $expresion  
-           set logresolvemerge "-LogFile=[user-tracking::get_user_tracking_dir]/tools/logresolvemerge.pl ${logdir}elane.log.$year-$month-${expresion}* ${logdir}elane.log.$nextyear-$nextmonth-01* |"
+           set logresolvemerge "-LogFile=[user-tracking::get_user_tracking_dir]/tools/logresolvemerge.pl ${logs}.$year-$month-${expresion}* ${logs}.$nextyear-$nextmonth-01* |"
            ns_log notice $logresolvemerge
    	}  	
       }
 } else {
    set logresolvemerge "-LogFile=[user-tracking::get_user_tracking_dir]/tools/logresolvemerge.pl "
-   append logresolvemerge " ${logdir}elane.log.$year-$month-0\[2-9\]* "
-   append logresolvemerge " ${logdir}elane.log.$year-$month-1\[0-9\]* "
-   append logresolvemerge " ${logdir}elane.log.$year-$month-2\[0-9\]* "
-   append logresolvemerge " ${logdir}elane.log.$year-$month-3\[0-1\]* "
-   append logresolvemerge " ${logdir}elane.log.$nextyear-$nextmonth-01* "
+   append logresolvemerge " ${logs}.$year-$month-0\[2-9\]* "
+   append logresolvemerge " ${logs}.$year-$month-1\[0-9\]* "
+   append logresolvemerge " ${logs}.$year-$month-2\[0-9\]* "
+   append logresolvemerge " ${logs}.$year-$month-3\[0-1\]* "
+   append logresolvemerge " ${logs}.$nextyear-$nextmonth-01* "
+   if { [string length $todaymonth] == 1} {
+	set todaymonth "0${todaymonth}"
+   }
    if {$month == $todaymonth} {
-  	append logresolvemerge  " ${logdir}elane.log |"
+  	append logresolvemerge  " ${logs} |"
    } else {
    	   append logresolvemerge " |"
    }

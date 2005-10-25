@@ -156,10 +156,7 @@
   <msg key="User_Name">Nombre de usuario</msg>
   <msg key="User_Stats">Estadísticas de usuarios</msg>
   <msg key="user_tracking_access_package">Acceso al paquete de User Tracking</msg>
-  <msg key="admin_portlet">Administrando UserTracking</msg>
   <msg key="User_Tracking_Home">User Tracking</msg>
-  <msg key="user_tracking_managment">Manejor de UserTracking</msg>
-  <msg key="user_tracking_portlet">User Tracking</msg>
   <msg key="Users">Usuarios</msg>
   <msg key="users_visits">Visitas por usuario</msg>
   <msg key="ut_Are_Admin">Participan como Administradores: %NofAdmin%</msg>

@@ -85,7 +85,8 @@ namespace eval user-tracking {
        		4 { set site_p 1}
        	}
         }
-	set binPerl [parameter::get -parameter "PerlPath"]
+	set binPerl [parameter::get -parameter "PerlPath" -default "/usr/bin/perl" ]
+	ns_log notice "LEIDO $binPerl"
                    	
         if {[exists_and_not_null all_users_p]} {
         	
@@ -94,7 +95,9 @@ namespace eval user-tracking {
         	db_foreach user "select user_id  from cc_users" {
          		ns_log notice "USER: $user_id"
 			set execAnalyzer [list "$binPerl" "[user-tracking::get_user_tracking_dir]/www/awstats/cgi-bin/awstats_dotlrn.pl" "-config=site" "-update" "-onlyusers=$user_id"]        	     		
+   			ns_log notice $execAnalyzer
    			catch {exec [lindex $execAnalyzer 0] [lindex $execAnalyzer 1] [lindex $execAnalyzer 2] [lindex $execAnalyzer 3] [lindex $execAnalyzer 4]} aux
+   			ns_log notice $aux
    		}
         }
         if {[exists_and_not_null all_communities_p]} {
