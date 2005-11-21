@@ -152,7 +152,7 @@ foreach Extra $ExtraUtil {
 		set campos [split $linea]
 		set patron "(END_EXTRA_${Extra})"
 		if { ![regexp $patron $linea todo part1] } {
-			multirow append Objects [lindex $campos 0] [lindex $campos 1] [lindex $campos 2] [lindex $campos 3] [user-tracking::converts_date [lindex $campos 4]] $ExtraTypes($Extra) "$ExtraLinks($Extra)?DataFileName=$DataFileName"
+			multirow append Objects [lindex $campos 0] [lindex $campos 1] [lindex $campos 2] [lindex $campos 3] [user-tracking::converts_date [lindex $campos 4]] $ExtraTypes($Extra) "$ExtraLinks($Extra)?DataFileName=$DataFileName&user_id=$user_id&community_id=$community_id"
 			set i [expr $i - 1]			
 		} else {
 			set i 0
