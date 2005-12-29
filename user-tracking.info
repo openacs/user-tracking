@@ -18,6 +18,8 @@
         <description format="text/html">The purpose behind this development is to ensure we track and retrieve knowledge about how end users are making use of the system. The main objective of this package will be to track user behaviour and activities, so that Professors and administrators can use this to understand how the system is used and make improvements in the learning process.</description>
 
         <provides url="user-tracking" version="0.1d2"/>
+        <requires url="dotlrn" version="2.1"/>
+        <requires url="acs-kernel" version="5.1.5"/>
 
         <callbacks>
             <callback type="after-install"  proc="user-tracking::apm_callbacks::package_install"/>
