@@ -52,14 +52,14 @@
          </querytext>
     </fullquery> 
  
-    <fullquery name="select_advanced_total_posts_by_type">
+      <fullquery name="select_advanced_total_posts_by_type">
         <querytext>
-	select count(*) from acs_objects a, acs_objects b
-        	where b.object_id = :oneCom
-	        and a.tree_sortkey between b.tree_sortkey
-        	and tree_right(b.tree_sortkey)
-	        and a.creation_user = :oneUser 
-	        and a.object_type = :object_type;
+	SELECT count(1) as result
+                FROM fs_files f,dotlrn_communities_full com,acs_objects o, acs_objects o2
+		WHERE f.file_id = o.object_id
+        		and com.community_id=:comm_id
+		      and o.package_id= o2.object_id
+		      and o2.context_id=com.package_id
         </querytext>
     </fullquery>
     
@@ -224,15 +224,15 @@
     </fullquery>  
 
     
-    <fullquery name="select_community_total_posts_by_type">
+        <fullquery name="select_community_total_posts_by_type">
         <querytext>
-	select count(*) from acs_objects a, acs_objects b
-        	where b.object_id = :oneCom
-	        and a.tree_sortkey between b.tree_sortkey
-        	and tree_right(b.tree_sortkey)
-	        and a.object_type = :object_type;
+	select count(*) from acs_objects o, fs_files f, acs_objects o2, dotlrn_communities_full com
+		where f.file_id=o.object_id
+		      and com.community_id= :oneCom
+		     and o.package_id= o2.object_id
+		      and o2.context_id=com.package_id
          </querytext>
-    </fullquery>   
+    </fullquery> 
 
 
 </queryset>

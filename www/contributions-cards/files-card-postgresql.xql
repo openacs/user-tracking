@@ -16,7 +16,7 @@
 		      o.modifying_user= :oneUser
 		      and o.creation_user <> :oneUser
 		      and com.community_id= :oneCom
-		      and o2.object_id= file_storage__get_package_id(f.parent_id)
+		      and o.package_id= o2.object_id
 		      and o2.context_id=com.package_id
 		      
 	</querytext>
@@ -81,7 +81,7 @@
 		from acs_objects o, fs_files f, acs_objects o2, dotlrn_communities_full com
 		where f.file_id=o.object_id
 		      and com.community_id= :oneCom
-		      and o2.object_id= file_storage__get_package_id(f.parent_id)
+		      and o.package_id= o2.object_id
 		      and o2.context_id=com.package_id
 		      
 	</querytext>
@@ -93,7 +93,7 @@
 	</querytext>
     </fullquery>
 
-    <fullquery name="select_created_files">
+  <fullquery name="select_created_files">
         <querytext>
 		select f.name, f.file_id, f.type, f.content_size,
 		       to_char(f.last_modified, 'YYYY-MM-DD HH24:MI:SS') as last_modified,
@@ -106,7 +106,7 @@
 		where f.file_id=o.object_id
 		      and o.creation_user= :oneUser
 		      and com.community_id= :oneCom
-		      and o2.object_id= file_storage__get_package_id(f.parent_id)
+		      and o.package_id= o2.object_id
 		      and o2.context_id=com.package_id
         </querytext>
     </fullquery>
@@ -127,7 +127,7 @@
         </querytext>
     </fullquery>
 
-    <fullquery name="select_created_files_by_com">
+<fullquery name="select_created_files_by_com">
         <querytext>
 		select f.name, f.file_id, f.type, f.content_size,
 		       to_char(f.last_modified, 'YYYY-MM-DD HH24:MI:SS') as last_modified,
@@ -139,7 +139,7 @@
 		from acs_objects o, fs_files f, acs_objects o2, dotlrn_communities_full com
 		where f.file_id=o.object_id
 		      and com.community_id= :oneCom
-		      and o2.object_id= file_storage__get_package_id(f.parent_id)
+		     and o.package_id= o2.object_id
 		      and o2.context_id=com.package_id
         </querytext>
     </fullquery>
