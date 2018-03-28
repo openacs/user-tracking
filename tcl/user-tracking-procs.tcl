@@ -20,7 +20,7 @@ namespace eval user-tracking {
     
     ad_proc -public get_user_tracking_dir {
     } {
-	Return directoy of user-tracking package
+	Return directory of user-tracking package
     } {
 	return "[acs_root_dir][pkg_home "user-tracking"]"
     }
