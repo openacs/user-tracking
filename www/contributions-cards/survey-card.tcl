@@ -147,7 +147,7 @@ if {![empty_string_p $user_id]} {
 				    ad_script_abort
 				}
 				multirow append Communities $oneCom $pretty_name $creation_date $key
-		    		#Proffesor
+		    		#Professor
 				set query select_survey_by_com
 				db_multirow -append -extend { 
 					posting_date_pretty

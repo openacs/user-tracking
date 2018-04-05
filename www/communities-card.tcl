@@ -72,7 +72,7 @@ if {![exists_and_not_null community_id]} {
     ad_returnredirect $referer
 }
 
-#Only proffesor of a class could see class stats
+#Only professor of a class could see class stats
 ad_require_permission $community_id "admin"
 
 
